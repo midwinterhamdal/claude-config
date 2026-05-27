@@ -1,0 +1,10 @@
+{
+  "name": "claude-usage",
+  "publisher": "local",
+  "displayName": "Claude Usage",
+  "description": "Shows Claude token usage in the VS Code status bar",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.85.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"]
+}

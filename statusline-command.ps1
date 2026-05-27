@@ -18,10 +18,24 @@ if ($raw.Trim()) {
     SLog "SKIP: $(if ($gotStdin) { 'empty stdin' } else { 'stdin timeout' })"
 }
 
-$cwd   = if ($data) { $data.cwd }   else { $PWD.Path }
-$model = if ($data) { $data.model.display_name } else { $null }
-$used  = if ($data) { $data.context_window.used_tokens } else { $null }
-$max   = if ($data) { $data.context_window.max_tokens }  else { $null }
+$cwd      = if ($data) { $data.cwd } else { $PWD.Path }
+$used     = if ($data) { $data.context_window.used_tokens } else { $null }
+$max      = if ($data) { $data.context_window.max_tokens }  else { $null }
+
+$modelRaw = if ($data) { $data.model } else { $null }
+$model = if ($modelRaw -is [string] -and $modelRaw) { $modelRaw }
+         elseif ($modelRaw -and $modelRaw.display_name)   { $modelRaw.display_name }
+         else { $null }
+SLog "DEBUG model: raw=$(($modelRaw | ConvertTo-Json -Compress -Depth 2) -replace '\s+',' ') resolved=$model"
+
+# Cache fallback for model
+$cache_path_early = "$env:USERPROFILE\.claude\statusline-cache.json"
+if (-not $model -and (Test-Path $cache_path_early)) {
+    try {
+        $oldC = Get-Content $cache_path_early -Raw | ConvertFrom-Json
+        $model = $oldC.model
+    } catch {}
+}
 
 # Shorten home directory
 $home_dir = $env:USERPROFILE

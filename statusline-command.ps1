@@ -172,8 +172,3 @@ try {
     $cache | ConvertTo-Json -Depth 10 -Compress | Set-Content $cache_path -Encoding UTF8
 } catch {}
 
-# ── 매 응답마다 rate limit 비동기 갱신 트리거 ────────────────────────────────
-$poller = "$env:USERPROFILE\.claude\usage-poller.ps1"
-if (Test-Path $poller) {
-    Start-Process pwsh -ArgumentList "-NoProfile -NonInteractive -WindowStyle Hidden -File `"$poller`"" -WindowStyle Hidden
-}

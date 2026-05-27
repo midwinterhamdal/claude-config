@@ -1,0 +1,33 @@
+# 민감 정보
+.credentials.json
+
+# Claude Code 런타임 / 대화 데이터
+projects/
+sessions/
+history.jsonl
+jobs/
+tasks/
+daemon/
+cache/
+backups/
+file-history/
+shell-snapshots/
+session-env/
+paste-cache/
+plugins/
+
+# 런타임 캐시 / 로그
+statusline-cache.json
+statusline.log
+poller.log
+*.log
+*.jsonl
+mcp-needs-auth-cache.json
+
+# 로컬 전용 설정
+settings.json
+settings.local.json
+
+# 임시 파일
+*.txt
+.last-cleanup
